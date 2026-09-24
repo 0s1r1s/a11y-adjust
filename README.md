@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> This project has not been implemented yet. This README describes the intended goals and planned functionality, not an existing implementation.
+
 # A11yAdjust
 
 **Tiny accessibility preferences for any website.**
@@ -1084,4 +1087,3 @@ for details.
 **A11yAdjust**
 
 *Tiny accessibility preferences for any website.*
-
