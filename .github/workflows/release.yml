@@ -1,0 +1,46 @@
+# Publishes to npm with provenance via npm Trusted Publishing (GitHub Actions OIDC).
+# No long-lived npm token is required. Configure the trusted publisher for this
+# repository and workflow file on npmjs.com before the first release.
+name: Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+          cache: npm
+      - name: Version matches tag
+        run: test "v$(node -p "require('./package.json').version")" = "$GITHUB_REF_NAME"
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npm run size
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test
+      - name: Checksums and SRI hashes
+        run: npm run hashes | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Upgrade npm for trusted publishing
+        run: npm install -g npm@latest
+      - name: Publish to npm with provenance
+        run: npm publish --provenance --access public
+      - name: Attach bundles and hashes to the GitHub release
+        run: gh release upload "$GITHUB_REF_NAME" dist/a11y-adjust.js dist/a11y-adjust.min.js dist/SHA256SUMS dist/SRI.txt --clobber
+        env:
+          GH_TOKEN: ${{ github.token }}

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Plain fixture</title>
+<style>
+  html{font-size:16px}
+  body{font-family:Georgia,serif;margin:0;padding:20px}
+  .spin{animation:spin 2s linear infinite;width:40px;height:40px;background:#c00}
+  @keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+  <h1>Plain fixture</h1>
+  <p id="text" style="font-size:1rem">Some text with <a id="link" href="#x">a link</a>.</p>
+  <button id="page-button" type="button">Page button</button>
+  <input id="page-input" aria-label="Page input">
+  <div class="spin" id="spin"></div>
+  <div style="height:2000px"></div>
+  <script src="../../dist/a11y-adjust.min.js" defer></script>
+</body>
+</html>

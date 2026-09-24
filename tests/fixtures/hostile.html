@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="de-AT">
+<head><meta charset="utf-8"><title>Hostile CSS fixture</title>
+<style>
+  button{all:unset}
+  svg{width:100%!important;height:100%!important}
+  *{box-sizing:content-box!important;font-size:30px!important;color:red!important}
+  div{position:relative;z-index:2147483647}
+  body{display:grid;gap:40px}
+</style>
+</head>
+<body>
+  <div style="position:fixed;inset:0;background:transparent;pointer-events:none"></div>
+  <h1>Feindliches CSS</h1>
+  <script src="../../dist/a11y-adjust.min.js"
+    data-position="top-left"
+    data-button-label="<img src=x onerror=&quot;window.__xss=1&quot;>"
+    data-accent="#7c3aed"
+    defer></script>
+</body>
+</html>

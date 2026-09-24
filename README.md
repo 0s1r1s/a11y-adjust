@@ -1,5 +1,5 @@
-> [!IMPORTANT]
-> This project has not been implemented yet. This README describes the intended goals and planned functionality, not an existing implementation.
+> [!NOTE]
+> Version 0.1.0 implements the complete feature set described below. The package has not been published to npm yet, so the CDN links start working with the first npm release. Until then, build the bundle locally (`npm run build`) and self-host it.
 
 # A11yAdjust
 
@@ -48,9 +48,9 @@ No initialization is required.
 
 Try A11yAdjust here:
 
-**https://YOUR-USERNAME.github.io/a11y-adjust/**
+**https://0s1r1s.github.io/a11y-adjust/**
 
-The demo should contain real page elements such as:
+The demo (`demo/` in this repository) contains real page elements such as:
 
 * headings
 * paragraphs
@@ -104,9 +104,17 @@ A11yAdjust focuses on a small set of useful user-controlled preferences.
 * Keyboard accessible interface
 * Screen reader friendly controls
 
-Not every feature has to ship in the first release.
+All of the features above ship in version 0.1.0, at about 7.6 KB gzip.
 
 The project intentionally prefers a small, reliable core over a large feature set.
+
+### Notes on individual features
+
+* **Text size** scales the root font size of the page in steps from 100% to 200%. It affects text sized with relative units (`rem`, `em`, `%`), which is how most modern sites are built. Text with fixed pixel sizes is not changed, because rewriting every element's font size would be exactly the kind of aggressive DOM manipulation this project avoids. Browser zoom remains the most robust option for pixel-based sites.
+* **Line height** and **letter spacing** use the values from WCAG 2.2 success criterion 1.4.12 (text spacing) or larger: line height 1.8, letter spacing 0.12em, word spacing 0.16em.
+* **Readable font** switches text to the operating system's UI font. No web font is downloaded. Code and common icon fonts are left untouched.
+* **High contrast** switches the page to white text on black with yellow links. Images and videos are not altered.
+* **Reading guide** and **reading mask** follow the mouse pointer and, for keyboard users, the focused element.
 
 ---
 
@@ -329,7 +337,29 @@ A11yAdjust.set('highContrast', true);
 A11yAdjust.set('textSize', 1.25);
 ```
 
-Invalid settings or values are ignored safely.
+Invalid settings or values are ignored safely. `set()` returns `true` when the value was accepted and `false` otherwise.
+
+The version is available as `A11yAdjust.version`.
+
+### Available settings
+
+| Setting             | Type    | Values                                   |
+| ------------------- | ------- | ---------------------------------------- |
+| `textSize`          | number  | `1`, `1.125`, `1.25`, `1.5`, `1.75`, `2` |
+| `lineHeight`        | boolean | `true` / `false`                         |
+| `letterSpacing`     | boolean | `true` / `false`                         |
+| `readableFont`      | boolean | `true` / `false`                         |
+| `highContrast`      | boolean | `true` / `false`                         |
+| `grayscale`         | boolean | `true` / `false`                         |
+| `highlightLinks`    | boolean | `true` / `false`                         |
+| `highlightHeadings` | boolean | `true` / `false`                         |
+| `reduceMotion`      | boolean | `true` / `false`                         |
+| `focusHighlight`    | boolean | `true` / `false`                         |
+| `largeCursor`       | boolean | `true` / `false`                         |
+| `readingGuide`      | boolean | `true` / `false`                         |
+| `readingMask`       | boolean | `true` / `false`                         |
+
+Each active boolean setting adds a class to `<html>`, derived from the setting name: `highContrast` becomes `a11y-adjust-high-contrast`. Sites can use these classes to fine-tune their own styles.
 
 ---
 
@@ -490,6 +520,16 @@ unsafe-eval
 ```
 
 and does not dynamically load additional JavaScript.
+
+All styles are applied through constructable stylesheets (`adoptedStyleSheets`), which are not subject to `style-src` restrictions, so `unsafe-inline` is not required either. The only exception is the large cursor preference: its cursor images are embedded as `data:` URIs and need `img-src data:` to be shown. Without it, the browser falls back to the normal cursor.
+
+A tested strict policy:
+
+```text
+default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:
+```
+
+When loading from a CDN, add the CDN origin to `script-src`.
 
 ### Shadow DOM
 
@@ -741,7 +781,7 @@ The readable build is provided for debugging, auditing and development.
 Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/a11y-adjust.git
+git clone https://github.com/0s1r1s/a11y-adjust.git
 cd a11y-adjust
 ```
 
@@ -751,7 +791,7 @@ Install development dependencies:
 npm install
 ```
 
-Start the development environment:
+Start the development environment (rebuilds on change and serves the demo at `http://localhost:4173/demo/`):
 
 ```bash
 npm run dev
@@ -781,7 +821,31 @@ Run accessibility tests:
 npm run test:a11y
 ```
 
-Exact commands may change while the initial project structure is being developed.
+Check the bundle size budget:
+
+```bash
+npm run size
+```
+
+Generate SHA-256 checksums and SRI hashes for `dist/`:
+
+```bash
+npm run hashes
+```
+
+Browser tests run in Chromium by default. Set `PW_ALL_BROWSERS=1` to also run Firefox and WebKit.
+
+### Project layout
+
+```text
+src/            widget source (ES modules, bundled with esbuild)
+demo/           live demo page
+tests/unit/     unit tests (node:test)
+tests/e2e/      browser tests (Playwright)
+tests/a11y/     accessibility tests (Playwright + axe-core)
+tests/fixtures/ test pages: plain, hostile CSS, invalid config, strict CSP
+scripts/        build, dev server, size check, hashes
+```
 
 ---
 
@@ -859,7 +923,7 @@ If not, it may belong outside the core package.
 
 Translations are welcome.
 
-Initial languages are planned to include:
+Included languages:
 
 ```text
 English
@@ -898,7 +962,7 @@ Responsible disclosure is appreciated.
 
 ## Roadmap
 
-### v0.1
+### v0.1 (implemented)
 
 Core foundation:
 
@@ -919,7 +983,7 @@ Core foundation:
 * focus highlight
 * public API
 
-### v0.x
+### v0.x (implemented early in v0.1)
 
 Additional preferences:
 
@@ -932,7 +996,7 @@ Additional preferences:
 
 ### v1.0
 
-Production-ready release:
+Production-ready release (the tooling for tests, hashes and provenance is in place; the stable release is still open):
 
 * complete MVP feature set
 * at least eight languages

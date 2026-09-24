@@ -1,0 +1,53 @@
+{
+  "name": "a11y-adjust",
+  "version": "0.1.0",
+  "description": "Tiny, dependency-free accessibility preferences widget for any website. One script tag, no tracking.",
+  "keywords": [
+    "accessibility",
+    "a11y",
+    "widget",
+    "preferences",
+    "reduced-motion",
+    "readability"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "author": "A11yAdjust contributors",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0s1r1s/a11y-adjust.git"
+  },
+  "homepage": "https://github.com/0s1r1s/a11y-adjust#readme",
+  "bugs": "https://github.com/0s1r1s/a11y-adjust/issues",
+  "main": "dist/a11y-adjust.js",
+  "browser": "dist/a11y-adjust.min.js",
+  "unpkg": "dist/a11y-adjust.min.js",
+  "jsdelivr": "dist/a11y-adjust.min.js",
+  "files": [
+    "dist/a11y-adjust.js",
+    "dist/a11y-adjust.min.js",
+    "dist/SHA256SUMS",
+    "dist/SRI.txt"
+  ],
+  "sideEffects": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/dev.mjs",
+    "serve": "node scripts/serve.mjs",
+    "size": "node scripts/size.mjs",
+    "hashes": "node scripts/hashes.mjs",
+    "test": "node --test \"tests/unit/*.test.js\"",
+    "test:e2e": "npm run build && playwright test --project=e2e",
+    "test:a11y": "npm run build && playwright test --project=a11y",
+    "test:all": "npm test && npm run build && npm run size && playwright test",
+    "prepublishOnly": "npm run build && npm test && npm run size && npm run hashes"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.10.2",
+    "@playwright/test": "1.56.1",
+    "esbuild": "0.25.10"
+  }
+}

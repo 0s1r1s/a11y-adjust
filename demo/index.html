@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A11yAdjust demo</title>
+<meta name="description" content="Live demo of A11yAdjust, a tiny accessibility preferences widget.">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header>
+  <nav aria-label="Main">
+    <a class="logo" href="#main">Harbor &amp; Pine</a>
+    <a href="#shop">Shop</a>
+    <a href="#journal">Journal</a>
+    <a href="#newsletter">Newsletter</a>
+    <a href="#api">Developers</a>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="hero-title">
+    <div>
+      <p><span class="pulse" aria-hidden="true"></span>Demo page for <strong>A11yAdjust</strong></p>
+      <h1 id="hero-title">Handmade goods for slow mornings</h1>
+      <p>This is a realistic test page. Open the round button in the corner to adjust text, contrast,
+        motion and reading aids. Everything happens locally in your browser.</p>
+      <p><a class="btn" href="#shop">Browse the shop</a> <button class="btn secondary" type="button" data-demo="open">Open preferences</button></p>
+    </div>
+    <img src="hero.svg" width="480" height="320" alt="Illustration of green hills under a yellow sun">
+  </section>
+
+  <div class="marquee" aria-hidden="true"><span>Free shipping on orders over 50 € · New spring collection · Animated banner for the reduce motion test</span></div>
+
+  <section id="shop" aria-labelledby="shop-title">
+    <h2 id="shop-title">Featured products</h2>
+    <div class="cards">
+      <div class="card"><h3>Ceramic mug</h3><p>Stoneware, glazed by hand in small batches.</p><p class="price">24 €</p><button class="btn" type="button">Add to cart</button></div>
+      <div class="card"><h3>Linen towel</h3><p>Soft washed linen that dries quickly. <a href="#care">Care guide</a>.</p><p class="price">18 €</p><button class="btn" type="button">Add to cart</button></div>
+      <div class="card"><h3>Oak board</h3><p>Solid oak, finished with natural oil.</p><p class="price">39 €</p><button class="btn" type="button">Add to cart</button></div>
+    </div>
+    <table>
+      <caption>Shipping times</caption>
+      <thead><tr><th scope="col">Region</th><th scope="col">Standard</th><th scope="col">Express</th></tr></thead>
+      <tbody><tr><td>Germany</td><td>2 to 3 days</td><td>1 day</td></tr><tr><td>EU</td><td>4 to 6 days</td><td>2 days</td></tr></tbody>
+    </table>
+  </section>
+
+  <article id="journal" aria-labelledby="journal-title">
+    <h2 id="journal-title">Journal: Why we make things slowly</h2>
+    <p>Long-form content is a good test for reading aids. Try the <em>reading guide</em> or the
+      <em>reading mask</em> while scrolling through this article, and increase the line height or
+      letter spacing to see how the text reflows.</p>
+    <h3>The workshop</h3>
+    <p>Our workshop sits at the edge of a small harbor town. Every morning starts with the same ritual:
+      coffee, a look at yesterday's kiln results, and a short walk along the pier. The rhythm of the
+      tides has shaped how we think about production. Nothing is rushed, and every piece is inspected
+      twice before it leaves the building.</p>
+    <p>We source clay from a family-run quarry two hours inland. The linen comes from a weaving mill
+      that has operated since 1911. Wood is bought only from certified forests, and offcuts become
+      coasters, spoons and firewood for the winter.</p>
+    <blockquote><p>"Good things take the time they need."</p></blockquote>
+    <h3 id="care">Care guide</h3>
+    <ul>
+      <li>Wash ceramics by hand to keep the glaze bright.</li>
+      <li>Linen softens with every wash. Avoid fabric softener.</li>
+      <li>Oil wooden boards once a month with food-safe oil.</li>
+    </ul>
+    <h4>A note on packaging</h4>
+    <p>All packaging is plastic-free and recyclable. We reuse shipping boxes from suppliers whenever
+      possible, which is why your parcel might have a surprising logo on it.</p>
+    <div class="transformed">
+      <p><strong>Transformed container.</strong> This box uses <code>transform</code> and
+        <code>overflow: hidden</code>, two common sources of widget layout bugs.</p>
+    </div>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis
+      dapibus posuere velit aliquet. Maecenas faucibus mollis interdum. Donec ullamcorper nulla non metus
+      auctor fringilla. Cras mattis consectetur purus sit amet fermentum. Nullam quis risus eget urna
+      mollis ornare vel eu leo.</p>
+    <p>Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia
+      quam venenatis vestibulum. Etiam porta sem malesuada magna mollis euismod. Curabitur blandit tempus
+      porttitor. Sed posuere consectetur est at lobortis.</p>
+  </article>
+
+  <section id="newsletter" aria-labelledby="newsletter-title">
+    <h2 id="newsletter-title">Newsletter</h2>
+    <form id="signup">
+      <label>Name <input name="name" autocomplete="name"></label>
+      <label>Email <input name="email" type="email" autocomplete="email" placeholder="you@example.com"></label>
+      <label>Interests
+        <select name="topic"><option>Ceramics</option><option>Textiles</option><option>Woodwork</option></select>
+      </label>
+      <label>Message <textarea name="message" rows="3"></textarea></label>
+      <label><input type="checkbox" name="consent" style="display:inline;width:auto"> Send me occasional updates</label>
+      <button class="btn" type="submit">Subscribe</button>
+    </form>
+  </section>
+
+  <section id="api" aria-labelledby="api-title">
+    <h2 id="api-title">JavaScript API playground</h2>
+    <p>These buttons call the public API. Events are logged below.</p>
+    <div class="api">
+      <button class="btn secondary" type="button" data-demo="open">A11yAdjust.open()</button>
+      <button class="btn secondary" type="button" data-demo="contrast">Toggle highContrast</button>
+      <button class="btn secondary" type="button" data-demo="size">set('textSize', 1.25)</button>
+      <button class="btn secondary" type="button" data-demo="read">getPreferences()</button>
+      <button class="btn secondary" type="button" data-demo="reset">A11yAdjust.reset()</button>
+    </div>
+    <pre id="event-log" aria-live="polite">Waiting for events…</pre>
+  </section>
+</main>
+
+<div class="fixed-note">Fixed element with z-index 9999</div>
+
+<footer>
+  <p>A11yAdjust provides user-controlled accessibility preferences. It does not make an inaccessible website compliant.</p>
+  <p><a href="https://github.com/0s1r1s/a11y-adjust">Source on GitHub</a></p>
+</footer>
+
+<script src="demo.js" defer></script>
+<script src="../dist/a11y-adjust.min.js" data-accent="#0f766e" defer></script>
+</body>
+</html>
